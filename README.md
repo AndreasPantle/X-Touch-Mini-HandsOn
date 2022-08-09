@@ -31,4 +31,32 @@ All this stuff is not officially by Behringer. I do some testings and tried to r
 
 # Documentation
 
+Finding the device with an actual Linux installation (5.4 kernel):
+
+```bash
+$ lsusb
+# ...
+Bus 001 Device 007: ID 1397:00b3 BEHRINGER International GmbH X-TOUCH MINI
+# ...
+
+$ usb-devices
+# ...
+T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  7 Spd=12  MxCh= 0
+D:  Ver= 1.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1397 ProdID=00b3 Rev=02.00
+S:  Manufacturer=Behringer
+S:  Product=X-TOUCH MINI
+S:  SerialNumber=1.0.1
+C:  #Ifs= 2 Cfg#= 1 Atr=80 MxPwr=300mA
+I:  If#=0x0 Alt= 0 #EPs= 0 Cls=01(audio) Sub=01 Prot=00 Driver=snd-usb-audio
+I:  If#=0x1 Alt= 0 #EPs= 2 Cls=01(audio) Sub=03 Prot=00 Driver=snd-usb-audio
+# ...
+
+$ $ amidi --list-devices
+Dir Device    Name
+IO  hw:1,0,0  X-TOUCH MINI MIDI 1
+```
+
+## Some pages:
+
 * [USB traffic analyzing](docs/usb_traffic.md)
