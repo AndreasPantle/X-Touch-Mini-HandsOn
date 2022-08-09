@@ -49,4 +49,8 @@ Playing around with some settings in the editor leads me to:
 |             |    |    |    |                  |           |                | 01-MC mode       |    |                |                | 01-Layer B active |    |            |
 ```
 
+[cmd51_response.tgn](docs/tables/cmd51_response.tgn)
+
 I can not identify the **?** in the table. Maybe this is only for the alignment of the telegram.
+
+Let's go on with the sysex messages...

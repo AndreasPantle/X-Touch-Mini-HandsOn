@@ -59,4 +59,5 @@ IO  hw:1,0,0  X-TOUCH MINI MIDI 1
 
 ## Some pages:
 
-* [USB traffic analyzing](docs/usb_traffic.md)
+* [USB traffic](docs/usb_traffic.md)
+* [SysEx Messages](docs/sysex_messages.md)
