@@ -12,7 +12,7 @@ I created a folder on this repository for storing the captured traffic here `usb
 
 ## `01_plugin.pcapng`
 
-[usbtraffic/01_plugin.pcapng](usbtraffic/01_plugin.pcapng) -> This is a capturing during connecting the X-Touch Mini with opened X-Touch Editor.
+[usbtraffic/01_plugin.pcapng](../usbtraffic/01_plugin.pcapng) -> This is a capturing during connecting the X-Touch Mini with opened X-Touch Editor.
 
 Starting with this file an packet no. 45:
 
@@ -49,7 +49,7 @@ Playing around with some settings in the editor leads me to:
 |             |    |    |    |                  |           |                | 01-MC mode       |    |                |                | 01-Layer B active |    |            |
 ```
 
-[cmd51_response.tgn](docs/tables/cmd51_response.tgn)
+[cmd51_response.tgn](tables/cmd51_response.tgn)
 
 I can not identify the **?** in the table. Maybe this is only for the alignment of the telegram.
 
