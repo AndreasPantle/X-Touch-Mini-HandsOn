@@ -57,7 +57,18 @@ Dir Device    Name
 IO  hw:1,0,0  X-TOUCH MINI MIDI 1
 ```
 
+## USB traffic
+
+### Sniffing with Wireshark and USBPcap
+
+For having the X-Touch Editor and Wireshark on one machine, I decided to use a Windows 10 virtual machine. Binding the X-Touch Mini directly to the vitual machine for getting the hardware connection. Actually I thought that Behringer is using a manufacturer specific protocol for the communication with the X-Touch Mini. So I was using Wireshark with the USB Pcap for sniffing the traffic. I opened the X-Touch Editor for the device communication parallel. I was a little bit surprised to see that the communication itself was only some Midi SysEx messages!?
+
+![usb_traffic_sysex](docs/img/usb_traffic_sysex.png)
+
+**So it seems that the X-Touch Editor itself is putting the commands for the X-Touch Mini in SysEx messages.**
+
+I created a folder on this repository for storing the captured traffic here `usbtraffic/`.
+
 ## So the interesting stuff
 
-* [USB traffic](docs/usb_traffic.md)
 * [SysEx Messages](docs/sysex_messages.md)
