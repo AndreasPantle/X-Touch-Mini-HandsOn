@@ -8,30 +8,30 @@ If you like to add some information to this repository, please feel free to do t
 
 ## Open points
 
-Actually I tried some stuff with the sniffed sysex messages. For a complete reconfiguration as it is working with the Windows software, I need a checksum and some stuff for getting the data to the X-Touc Mini. **So if you are working on the same think and can help me with this matter, please contact me.** I was sniffing the reading and writing process with the Windows software. But no luck if I'm doing this with a script and the same sysex data, the X-Touch Mini is ignoring my configuration. Maybe there is an engineer from Behringer out there with the possibility to provide some informations about this stuff.
+Actually I tried some stuff with the sniffed SysEx messages. For a complete reconfiguration as it is working with the Windows editor software, I need a checksum and some hints for getting the data to the X-Touch Mini. **So if you are working on the same think and can help me with this matter, please contact me.** I was sniffing the reading and writing process. But no luck if I'm doing this with a script and the same SysEx data, the X-Touch Mini is ignoring my configuration – maybe because of some timing issues? If there is an engineer from Behringer out there with the possibility to provide some information's about this, it would be great!
 
 For now I decided to make this stuff public in hope there is someone who can give me some hints.
 
 ## Disadvantages
 
-Yes there are...:
+Yes there are. Even for me.
 
-* Behringer is offering a Windows software for setting up the X-Touch Mini only. Actually I can not find a software for macOS or Linux.
-* The support by Behringer feels to me to little. There is a documentation for the X-Touch Mini - Ok. So far it does not describe the interesting stuff for that device. In addition to that, there is only a forum. So everything you can read here is the result of doing testings, sniffing and try to reverse engineer.
+* Behringer is offering an editor for reconfiguration the device for Windows only. It seems that there is actually no macOS or Linux version in public.
+* It seems that Behringer is not interested to give the communication protocol to public. I guess there are some guys out there who can develop an editor for other platforms. There is a documentation for the X-Touch Mini - Ok. So far it does not describe the interesting stuff for that device. In addition to that, there is only a forum. So everything you can read here is the result of doing testings, sniffing and try to reverse engineer.
 
 ## What are my use cases?
 
-* I'm a Linux and a macOS user. My first goals are to load / save the settings from the device. In addition to that it would be nice to reconfigure the device.
-* I have the need to change the device settings dynamically. Which means I need to load the settings in dependency of my application state. I have no Windows on my embedded device. Thinking of using an Rasperry Pi and you like to change the configuration. Actually I have not found a way for doing this.
-* You can do much more with if you no some background stuff.
+* I'm a Linux and a macOS user. My first goals are to load / save the settings from the device. In addition to that it would be nice to reconfigure the device without the need of Windows.
+* I like to change the device configuration dynamically. Which means I need to load the settings in dependency of my application state. Thinking of using an Raspberry Pi and you like to change the configuration. Actually I have not found a way for doing this.
+* You can do much more with it as an add on to a normal keyboard.
 
 ## Please note!
 
-All this stuff is not officially by Behringer. I do some testings and tried to reverse engineer. So please be careful and check the [License](LICENSE.md) file. You can use this informations by your own responsibility.
+All this stuff is not officially by Behringer. I do some testings and tried to reverse engineer. So please be careful and check the [License](LICENSE.md) file. You can use this information's by your own responsibility.
 
 # Documentation
 
-Finding the device with an actual Linux installation (5.4 kernel):
+Getting some USB information about the device with an actual Linux installation (5.4 kernel):
 
 ```bash
 $ lsusb
@@ -57,7 +57,7 @@ Dir Device    Name
 IO  hw:1,0,0  X-TOUCH MINI MIDI 1
 ```
 
-## Some pages:
+## So the interesting stuff
 
 * [USB traffic](docs/usb_traffic.md)
 * [SysEx Messages](docs/sysex_messages.md)
