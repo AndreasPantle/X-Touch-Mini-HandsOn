@@ -4,7 +4,7 @@
 
 ### `01_plugin.pcapng`
 
-[usbtraffic/01_plugin.pcapng](../usbtraffic/01_plugin.pcapng) -> This is a capturing during connecting the X-Touch Mini with opened X-Touch Editor.
+[01_plugin.pcapng](../usbtraffic/01_plugin.pcapng) -> This is a capturing during connecting the X-Touch Mini with opened X-Touch Editor.
 
 #### Reading device informations
 
@@ -86,4 +86,4 @@ $ echo -ne "\xf0\x40\x41\x42\x52\x02\x00\x00\x00\x00\x00\x00\x00\xf7" > get_laye
 $ amidi -p hw:1 -s get_layer_b_config.syx --dump
 ```
 
-We have a look of the configuration later on.
+We have a look of the configuration later on. You can get the SysEx files here: [get_layer_a_config.syx](../sysex/get_layer_a_config.syx) and [get_layer_b_config.syx](../sysex/get_layer_b_config.syx).
