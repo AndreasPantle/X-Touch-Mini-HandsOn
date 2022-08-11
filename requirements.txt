@@ -1,0 +1,4 @@
+python_rtmidi==1.4.9
+rich==12.5.1
+rich_click==1.5.2
+rtmidi==2.3.4

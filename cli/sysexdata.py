@@ -1,0 +1,5 @@
+# -*- coding: utf-8 -*-
+
+SYSEX_DEVICE_INFO = 'f0 40 41 42 51 00 00 00 00 00 00 00 00 f7'
+
+SYSEX_MODE_SWITCH = 'f0 40 41 42 59 %02d 00 00 00 00 00 00 00 f7'

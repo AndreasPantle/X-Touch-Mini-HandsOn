@@ -71,4 +71,65 @@ I created a folder on this repository for storing the captured traffic here `usb
 
 ## So the interesting stuff
 
-* [SysEx Messages](docs/sysex_messages.md)
+I will add the stuff on this page: [SysEx Messages](docs/sysex_messages.md). So if you like to add some information's, please feel free to do it...
+
+# CLI
+
+As a result of the work above I initially wrote an command line interface in python. Generally it is a communication wrapper for the SysEx messages from above.
+
+```bash
+# Install the dependencies
+$ python3 -m pip install -r requirements.txt --user
+
+$ cd cli
+$ python3 -m xtm --help
+```
+
+## Commands
+
+### `ports`
+
+List the available Midi ports on your computer:
+
+```bash
+$ python3 -m xtm ports
+                Midi Input Ports                 
+┏━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Index ┃ Name                                  ┃
+┡━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 0     │ Midi Through:Midi Through Port-0 14:0 │
+│ 1     │ X-TOUCH MINI:X-TOUCH MINI MIDI 1 20:0 │
+└───────┴───────────────────────────────────────┘
+                Midi Output Ports                
+┏━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Index ┃ Name                                  ┃
+┡━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 0     │ Midi Through:Midi Through Port-0 14:0 │
+│ 1     │ X-TOUCH MINI:X-TOUCH MINI MIDI 1 20:0 │
+└───────┴───────────────────────────────────────┘
+```
+
+### `info`
+
+Gives you the information about the device id, global channel, mode, firmware and the actual active layer.
+
+```bash
+$ python3 -m xtm --port 1 info
+      Device Information      
+┌─────────────────┬──────────┐
+│ Device ID:      │ 12       │
+│ Global channel: │ 13       │
+│ Mode:           │ Standard │
+│ Firmware:       │ 1.8      │
+│ Layer:          │ A        │
+└─────────────────┴──────────┘
+```
+
+### `mode`
+
+Change the actual mode to *MC* or *Standard*.
+
+```bash
+$ python3 -m xtm --port 1 mode 1  # Switch to MC mode
+$ python3 -m xtm --port 1 mode 0  # Switch to Standard mode
+```
