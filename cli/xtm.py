@@ -9,7 +9,7 @@ from rich.console import Console
 # Create a console instance for formatting the output against this
 console = Console()
 from utils import bytes_to_hex_str
-from sysexdata import SYSEX_DEVICE_INFO, SYSEX_MODE_SWITCH
+from sysexdata import SYSEX_DEVICE_INFO, SYSEX_MODE_SWITCH, SYSEX_DEVICE_ID, SYSEX_GLOBAL_CH
 
 
 """
@@ -143,8 +143,11 @@ def info(ctx):
                     )
                 break
         info_table = Table(title='Device Information', show_header=False)
-        info_table.add_row('Device ID:', '%i' % receiving_data[0][5])
-        info_table.add_row('Global channel:', '%i' % receiving_data[0][6])
+        info_table.add_row('Device ID:', '%i' % (receiving_data[0][5] + 1))
+        if receiving_data[0][6] == 0x12:
+            info_table.add_row('Global channel:', 'Off')
+        else:
+            info_table.add_row('Global channel:', '%i' % (receiving_data[0][6] + 1))
         if receiving_data[0][7] == 0x00:
             info_table.add_row('Mode:', 'Standard')
         elif receiving_data[0][7] == 0x01:
@@ -192,6 +195,119 @@ def mode(ctx, mode):
         )
         port_midi_in.ignore_types(sysex=False)
         sending_data = bytearray.fromhex((SYSEX_MODE_SWITCH % mode))
+        if ctx.obj[VERBOSE_MODE]:
+            console.print(
+                '[white]Sending: %s - %i bytes[/white]' % (bytes_to_hex_str(sending_data), len(sending_data)),
+                highlight=False
+            )
+        timeout_start = time.time()
+        port_midi_out.send_message(sending_data)
+        while True:
+            receiving_data = port_midi_in.get_message()
+            timeout_actual = time.time()
+            if (timeout_actual - timeout_start) > ctx.obj[TIMEOUT]:
+                console.print('[bold][red]Timeout! -> No answering from device.[/red][/bold]')
+                break
+            if receiving_data is not None and isinstance(receiving_data, tuple):
+                if ctx.obj[VERBOSE_MODE]:
+                    console.print(
+                        '[white]Reading: %s - %i bytes[/white]' % (bytes_to_hex_str(receiving_data[0]),
+                                                                   len(receiving_data[0])),
+                        highlight=False
+                    )
+                break
+            # TODO: Check the return value!
+    except rtmidi.InvalidPortError:
+        console.print(
+            '[bold][red]InvalidPortError[/red][/bold] Port: %i is not a valid port!' % ctx.obj['RTMIDI_PORT_NO']
+        )
+    except rtmidi.InvalidUseError:
+        console.print(
+            '[bold][red]InvalidUseError[/red][/bold] Port: %i is already open!' % ctx.obj['RTMIDI_PORT_NO']
+        )
+    except TypeError:
+        console.print(
+            '[bold][red]TypeError[/red][/bold] The port is always a number starting from 0.'
+        )
+
+
+@cli.command()
+@click.argument('devid', required=True, default=1)
+@click.pass_context
+def devid(ctx, devid):
+    """
+    Set the device id from 1 to 16.
+    """
+
+    if not 1 <= devid <= 16:
+        console.print('[bold][red]Unknown device id! Choose between 1 to 16.[/red][/bold]')
+        return
+
+    # Open the Midi ports
+    try:
+        port_midi_in, port_midi_out = xtm_cli_open_midi_port(
+            rtmidi_in=ctx.obj[RTMIDI_MIDI_IN], rtmidi_out=ctx.obj[RTMIDI_MIDI_OUT], port=ctx.obj[RTMIDI_PORT_NO]
+        )
+        port_midi_in.ignore_types(sysex=False)
+        sending_data = bytearray.fromhex((SYSEX_DEVICE_ID % (devid - 1)))
+        if ctx.obj[VERBOSE_MODE]:
+            console.print(
+                '[white]Sending: %s - %i bytes[/white]' % (bytes_to_hex_str(sending_data), len(sending_data)),
+                highlight=False
+            )
+        timeout_start = time.time()
+        port_midi_out.send_message(sending_data)
+        while True:
+            receiving_data = port_midi_in.get_message()
+            timeout_actual = time.time()
+            if (timeout_actual - timeout_start) > ctx.obj[TIMEOUT]:
+                console.print('[bold][red]Timeout! -> No answering from device.[/red][/bold]')
+                break
+            if receiving_data is not None and isinstance(receiving_data, tuple):
+                if ctx.obj[VERBOSE_MODE]:
+                    console.print(
+                        '[white]Reading: %s - %i bytes[/white]' % (bytes_to_hex_str(receiving_data[0]),
+                                                                   len(receiving_data[0])),
+                        highlight=False
+                    )
+                break
+            # TODO: Check the return value!
+    except rtmidi.InvalidPortError:
+        console.print(
+            '[bold][red]InvalidPortError[/red][/bold] Port: %i is not a valid port!' % ctx.obj['RTMIDI_PORT_NO']
+        )
+    except rtmidi.InvalidUseError:
+        console.print(
+            '[bold][red]InvalidUseError[/red][/bold] Port: %i is already open!' % ctx.obj['RTMIDI_PORT_NO']
+        )
+    except TypeError:
+        console.print(
+            '[bold][red]TypeError[/red][/bold] The port is always a number starting from 0.'
+        )
+
+
+@cli.command()
+@click.argument('globch', required=True, default=1)
+@click.pass_context
+def globch(ctx, globch):
+    """
+    Set the global channel from 1 to 16 / or 0 for off.
+    """
+
+    if not 0 <= globch <= 16:
+        console.print('[bold][red]Unknown global channel! Choose between 0-off or 1 to 16.[/red][/bold]')
+        return
+
+    # Open the Midi ports
+    try:
+        port_midi_in, port_midi_out = xtm_cli_open_midi_port(
+            rtmidi_in=ctx.obj[RTMIDI_MIDI_IN], rtmidi_out=ctx.obj[RTMIDI_MIDI_OUT], port=ctx.obj[RTMIDI_PORT_NO]
+        )
+        port_midi_in.ignore_types(sysex=False)
+        if globch == 0:
+            sending_data = bytearray.fromhex((SYSEX_GLOBAL_CH % 0x12))
+        else:
+            sending_data = bytearray.fromhex((SYSEX_GLOBAL_CH % (globch - 1)))
         if ctx.obj[VERBOSE_MODE]:
             console.print(
                 '[white]Sending: %s - %i bytes[/white]' % (bytes_to_hex_str(sending_data), len(sending_data)),

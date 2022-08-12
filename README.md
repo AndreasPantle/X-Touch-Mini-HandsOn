@@ -117,8 +117,8 @@ Gives you the information about the device id, global channel, mode, firmware an
 $ python3 -m xtm --port 1 info
       Device Information      
 ┌─────────────────┬──────────┐
-│ Device ID:      │ 12       │
-│ Global channel: │ 13       │
+│ Device ID:      │ 16       │
+│ Global channel: │ Off      │
 │ Mode:           │ Standard │
 │ Firmware:       │ 1.8      │
 │ Layer:          │ A        │
@@ -132,4 +132,20 @@ Change the actual mode to *MC* or *Standard*.
 ```bash
 $ python3 -m xtm --port 1 mode 1  # Switch to MC mode
 $ python3 -m xtm --port 1 mode 0  # Switch to Standard mode
+```
+
+### `devid`
+
+Change the device id.
+
+```bash
+$ python3 -m xtm --port 1 devid 1  # Change the device id to 1
+```
+
+### `globch`
+
+Change the global channel.
+
+```bash
+$ python3 -m xtm --port 1 globch 0  # Change the global channel to off.
 ```
